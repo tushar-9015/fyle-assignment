@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  /* background-color: #ffc47d; */
+}
+
+.profile-section {
+  height: 90vh;
+  padding: 2rem 4rem;
+}
+
+.user-info-container {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.user-name {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.user-bio {
+  font-size: 1rem;
+  color: grey;
+  margin-bottom: 0.75rem;
+}
+
+.user-location {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.user-location > span {
+  font-size: 1.3rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.copy-url {
+  margin-top: 2rem;
+}
+
+.user-img {
+  width: 150px;
+  height: 150px;
+  background-color: grey;
+  border-radius: 100%;
+}
+
+.profile-bottom {
+  margin-top: 2rem;
+}
+
+.user-repository {
+  width: 400px;
+  min-width: 350px;
+  /* background-color: red; */
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.user-repository > h2 {
+  font-size: 1.3rem;
+  color: #428bca;
+}
+
+.user-repository > p {
+  color: rgb(19, 19, 19);
+  font-weight: 500;
+}
+
+.topics {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.topics > .topic {
+  background-color: #428bca;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  margin-bottom: 1rem;
+}
+
+.pagination a {
+  color: black;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+  border: grey;
+}
+
+.pagination a.active {
+  background-color: #428bca;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+.pagination-btn-container {
+  width: 20rem;
+  margin: auto;
+}
+.pagination-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev-btn,
+.next-btn {
+  border: 1px solid black;
+  border-radius: 14px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* width: 4rem; */
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
