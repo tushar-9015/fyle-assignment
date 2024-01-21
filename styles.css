@@ -14,12 +14,14 @@ body {
 main {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   /* background-color: #ffc47d; */
 }
 
 .profile-section {
-  height: 90vh;
   padding: 2rem 4rem;
+  flex: 1 1 auto;
 }
 
 .user-info-container {
@@ -56,15 +58,23 @@ a {
   margin-top: 2rem;
 }
 
-.user-img {
+.user-img-section {
   width: 150px;
   height: 150px;
   background-color: grey;
   border-radius: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
-.profile-bottom {
-  margin-top: 2rem;
+.repository-container {
+  margin: 2rem auto;
+}
+
+.repository-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .user-repository {
@@ -106,8 +116,10 @@ a {
 }
 
 .pagination-container {
+  margin-top: auto;
   display: flex;
   justify-content: center;
+  flex: 0 0 auto;
 }
 
 .pagination {
@@ -133,14 +145,15 @@ a {
 .pagination-btn-container {
   width: 20rem;
   margin: auto;
+  flex: 0 0 auto;
 }
 .pagination-btns {
   display: flex;
   justify-content: space-between;
 }
 
-.prev-btn,
-.next-btn {
+
+.btn {
   border: 1px solid black;
   border-radius: 14px;
   padding: 5px 8px;
@@ -150,4 +163,5 @@ a {
   /* width: 4rem; */
   font-size: 1rem;
   margin-bottom: 2rem;
+  cursor: pointer;
 }
