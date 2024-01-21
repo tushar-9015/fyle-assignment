@@ -1,8 +1,3 @@
-// const profile = document.querySelector("#user-img");
-// const userName = document.querySelector(".user-name");
-// const userBio = document.querySelector(".user-bio");
-
-// const userLocation = document.querySelector(".user-location");
 const profile = document.querySelector(".profile-top");
 const repositoryContainer = document.getElementById("repositoryContainer");
 const prevBtn = document.querySelector("#prev-btn");
@@ -11,6 +6,7 @@ const paginationButtons = document.querySelector(".pagination");
 const searchInput = document.querySelector("#search-input");
 const searchBtn = document.querySelector("#search-btn");
 const resultsPerPage = document.querySelector("#repository-per-page");
+const loadingDialog = document.getElementById("loadingDialog");
 
 let searchQuery = "";
 let maxCardInPage = 10;
@@ -88,7 +84,7 @@ function updateViewRepoList(repositoryList) {
     );
     list.appendChild(card);
   }
-  repositoryContainer.innerHTML = "";
+  // repositoryContainer.innerHTML = "";
   list.classList.add("repository-list");
   repositoryContainer.appendChild(list);
 }
@@ -148,6 +144,12 @@ function updateViewPaginationButtons() {
 }
 
 async function getPageData() {
+  if (repoLoading) return;
+
+  repoLoading = true;
+  repositoryContainer.innerHTML = "";
+  toggleLoading(repositoryContainer, true);
+
   let query = searchQuery.trim().length > 0 ? searchQuery.trim() : undefined;
   repositoryList = await getRepositories(
     userData.login,
@@ -155,13 +157,29 @@ async function getPageData() {
     currentPageNumber,
     maxCardInPage
   );
+
+  repoLoading = false;
+  toggleLoading(repositoryContainer, false);
+
   updateViewPaginationButtons();
   updateViewRepoList(repositoryList.items);
 }
 
+function toggleLoading(location, isLoading) {
+  if (isLoading) {
+    location.insertAdjacentHTML(
+      "beforeend",
+      `<div class="loading">Loading...</div>`
+    );
+  } else {
+    const el = location.querySelector(".loading");
+    el.remove();
+  }
+}
+
 async function initial(username = "tushar-9015") {
   userLoading = true;
-  repoLoading = true;
+  loadingDialog.showModal();
   try {
     userData = await getUserData(username);
     updateViewUser(userData);
@@ -169,7 +187,7 @@ async function initial(username = "tushar-9015") {
   } catch (error) {
   } finally {
     userLoading = false;
-    repoLoading = false;
+    loadingDialog.close();
   }
 }
 

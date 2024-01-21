@@ -238,6 +238,16 @@ a {
   }
 }
 
+.loading {
+  width: 200px;
+  font-size: 20px;
+  background-color: #ddd;
+  text-align: center;
+  padding: 10px;
+  margin: auto;
+  margin-top: 4rem;
+}
+
 @media screen and (max-width: 800px) {
   .search-input {
     padding: 2px;
