@@ -69,6 +69,11 @@ a {
   object-position: center;
   flex: 0 0 auto;
 }
+#user-img {
+  border-radius: inherit;
+  height: 100%;
+  width: 100%;
+}
 
 .repository-container {
   margin: 2rem auto;

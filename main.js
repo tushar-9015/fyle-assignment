@@ -1,7 +1,9 @@
-const profile = document.querySelector("#user-img");
-const userName = document.querySelector(".user-name");
-const userBio = document.querySelector(".user-bio");
-const userLocation = document.querySelector(".user-location");
+// const profile = document.querySelector("#user-img");
+// const userName = document.querySelector(".user-name");
+// const userBio = document.querySelector(".user-bio");
+
+// const userLocation = document.querySelector(".user-location");
+const profile = document.querySelector(".profile-top");
 const repositoryContainer = document.getElementById("repositoryContainer");
 const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
@@ -44,12 +46,36 @@ const cardTemplate = (index, title, description, topics = []) => {
 };
 
 function updateViewUser(data) {
-  userName.textContent = data.name;
-  userBio.textContent = data.bio;
-  userLocation.textContent = data.location;
+  profile.querySelector(".user-name").textContent = data.name;
+  profile.querySelector(".user-bio").textContent = data.bio;
+  profile.querySelector(".user-location").textContent = data.location;
+  profile
+    .querySelector(".user-img-section")
+    .insertAdjacentHTML(
+      "beforeend",
+      `  <img id="user-img" src="${data.avatar_url}" alt="avatar" />`
+    );
+
+  if (data.twitter_username && data.twitter_username.length > 0) {
+    profile
+      .querySelector(".user-info")
+      .insertAdjacentHTML(
+        "beforeend",
+        `<a target="_blank"  href="https://twitter.com/${data.twitter_username}">Twitter: ${data.twitter_username}</a>`
+      );
+  }
+  if (data.html_url && data.html_url.length > 0) {
+    profile
+      .querySelector(".copy-url")
+      .insertAdjacentHTML(
+        "beforeend",
+        `<a target="_blank"  href="${data.html_url}">Github: ${data.html_url}</a>`
+      );
+  }
 }
 
 function updateViewRepoList(repositoryList) {
+  searchInput.value = searchQuery;
   const list = document.createElement("div");
 
   for (let i = 0; i < repositoryList.length; i++) {
@@ -159,6 +185,10 @@ function attachEventToDom() {
 
   searchBtn.addEventListener("click", (e) => {
     currentPageNumber = 1;
+    let searchParams = new URLSearchParams(document.location.search);
+    searchParams.set("search", searchQuery);
+    let newPath = window.location.pathname + "?" + searchParams.toString();
+    history.pushState(null, "", newPath);
     getPageData();
   });
 
