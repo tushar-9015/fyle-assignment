@@ -6,13 +6,13 @@ const repositoryContainer = document.getElementById("repositoryContainer");
 const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 const paginationButtons = document.querySelector(".pagination");
+const searchInput = document.querySelector("#search-input");
+const searchBtn = document.querySelector("#search-btn");
+const resultsPerPage = document.querySelector("#repository-per-page");
 
 let searchQuery = "";
 let maxCardInPage = 10;
 let currentPageNumber = 1;
-
-const repositoryCardTemplate =
-  document.getElementById("repositoryCard").content;
 
 let userData;
 let userLoading = false;
@@ -21,7 +21,7 @@ let repositoryList = [];
 
 const cardTemplate = (index, title, description, topics = []) => {
   const to_ret = document.createElement("div");
-  to_ret.innerHTML = `  <div class="user-repository" id="card-${index}">
+  to_ret.innerHTML = `  <div class="user-repository card" id="card-${index}">
 <h2>
     ${title}
 </h2>
@@ -107,32 +107,25 @@ function updateViewPaginationButtons() {
   );
 
   // remove active class
-  const active = paginationButtons.querySelector(".active");
+  let active = paginationButtons.querySelector(".active");
   if (active) {
     active.classList.remove("active");
   }
 
   // update active class
-  const btn = paginationButtons.querySelector(
+  active = paginationButtons.querySelector(
     `[data-page="${currentPageNumber}"]`
   );
-  btn.classList.add("active");
-}
-
-async function searchRepositories(searchQuery) {
-  repositoryList = await getRepositories(
-    userData.login,
-    searchQuery,
-    currentPageNumber,
-    maxCardInPage
-  );
-  updateViewRepoList();
+  if (active) {
+    active.classList.add("active");
+  }
 }
 
 async function getPageData() {
+  let query = searchQuery.trim().length > 0 ? searchQuery.trim() : undefined;
   repositoryList = await getRepositories(
     userData.login,
-    searchQuery,
+    query,
     currentPageNumber,
     maxCardInPage
   );
@@ -140,11 +133,11 @@ async function getPageData() {
   updateViewRepoList(repositoryList.items);
 }
 
-async function initial() {
+async function initial(username = "tushar-9015") {
   userLoading = true;
   repoLoading = true;
   try {
-    userData = await getUserData();
+    userData = await getUserData(username);
     updateViewUser(userData);
     getPageData();
   } catch (error) {
@@ -155,6 +148,20 @@ async function initial() {
 }
 
 function attachEventToDom() {
+  resultsPerPage.addEventListener("change", (e) => {
+    maxCardInPage = e.target.value;
+    getPageData();
+  });
+
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+  });
+
+  searchBtn.addEventListener("click", (e) => {
+    currentPageNumber = 1;
+    getPageData();
+  });
+
   prevBtn.addEventListener("click", (e) => {
     currentPageNumber--;
     getPageData();
@@ -189,5 +196,21 @@ function ready(fn) {
   document.addEventListener("DOMContentLoaded", fn);
 }
 
-initial();
+function getSearchParams() {
+  let url = new URL(document.location.href);
+  const userName = url.searchParams.get("user") ?? "tushar-9015";
+
+  currentPageNumber =
+    url.searchParams.get("page") &&
+    !isNaN(parseInt(url.searchParams.get("page")))
+      ? parseInt(url.searchParams.get("page"))
+      : currentPageNumber;
+
+  searchQuery = url.searchParams.get("search") ?? "";
+  initial(userName);
+}
+
 ready(attachEventToDom);
+window.addEventListener("load", (e) => {
+  getSearchParams();
+});

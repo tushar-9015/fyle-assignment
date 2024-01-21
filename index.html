@@ -36,8 +36,37 @@
                 </div>
             </div>
 
-            <div id="repositoryContainer" class="repository-container">
+            <div class="filters">
+                <div class="search-box">
+                    <input type="search" placeholder="search repository..." id="search-input" />
+                    <button id="search-btn" type="submit">Search</button>
+                </div>
 
+                <div class="select-options">
+                    <label>Results per page: </label>
+                    <select id="repository-per-page" name="repository-per-page" value="10">
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div id="repositoryContainer" class="repository-container">
+                <!-- <div class="user-repository">
+                    <h2>
+                         Repository Title
+        
+                    </h2>
+                    <p>
+                        >Description
+                    </p>
+                    <div class="topics">
+                            <div class="topic">Topic</div>
+                    
+                    </div>
+                </div> -->
             </div>
         </section>
         <div class="pagination-container">
@@ -65,22 +94,7 @@
 
     </main>
 
-    <template id="repositoryCard">
-        <div class="user-repository">
-            <h2>
-                <slot name="title"> Repository Title</slot>
-
-            </h2>
-            <p>
-                <slot name="description">Description</slot>
-            </p>
-            <div class="topics">
-                <slot name="topics">
-                    <div class="topic">Topic</div>
-                </slot>
-            </div>
-        </div>
-    </template>
+    <link rel="stylesheet" href="repository-list.css" />
     <script src="services/userData.js"></script>
     <script src="services/repository.js"></script>
     <script src="main.js"></script>
