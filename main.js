@@ -235,13 +235,13 @@ function attachEventToDom() {
   });
 }
 
-function ready(fn) {
+function ready() {
   if (document.readyState !== "loading") {
-    fn();
+    attachEventToDom();
     return;
   }
   updateViewPaginationButtons();
-  document.addEventListener("DOMContentLoaded", fn);
+  document.addEventListener("DOMContentLoaded", attachEventToDom);
 }
 
 function getSearchParams() {
@@ -258,7 +258,7 @@ function getSearchParams() {
   initial(userName);
 }
 
-ready(attachEventToDom);
+ready();
 window.addEventListener("load", (e) => {
   getSearchParams();
 });
